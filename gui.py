@@ -150,6 +150,10 @@ class Ui_func_input(object):
         function = self.func_input.text()
         function = function.replace('^', '**')
         file_name = self.fileName_input.text()
+        with open('input.txt', 'r') as f:
+            function = f.read()
+            f.close()
+            print(function)
         if index == 0:
             method = "bisection"
             xu = self.range_input1.text()
