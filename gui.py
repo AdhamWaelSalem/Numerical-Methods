@@ -180,6 +180,9 @@ class Ui_func_input(object):
             method = "bisection"
             xu = self.range_input1.text()
             xl = self.range_input2.text()
+            print(function, xu, xl, maxIterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list,
+                                f_xr_list,
+                                tolerance)
             functions.bisection(function, xu, xl, maxIterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list,
                                 f_xr_list,
                                 tolerance)

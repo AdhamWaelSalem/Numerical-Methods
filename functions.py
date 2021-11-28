@@ -1,18 +1,28 @@
+import ast
+from ast import literal_eval
+
+import asteval
+
 from sympy import *
 from numpy import sin, cos, tan, cosh, tanh, sinh
 from math import e
 
-def calc(f, value):
-    x = value
-    return round(eval(f),7)
+def calc(f, x):
+    return eval(f)
 
 
 def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list, tolerance):
+    print("Error checker 1")
     c = 0
-
-    if calc(f, xu) * calc(f, xl) >= 0:
+    print("before calc 1")
+    calc1 = calc(f, xu)
+    print("before calc 2")
+    calc2 = calc(f, xl)
+    print("printing calcs")
+    print(calc1,calc2)
+    if calc1 * calc2 >= 0:
         return None  # bisection can not be used to get the root
-
+    print("Error checker 2")
     xu_n = xu  # xu_n is a temporary variable use to store new value of x upper
     xl_n = xl  # xl_n is a temporary variable use to store new value of x lower
 
