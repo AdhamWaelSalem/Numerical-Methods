@@ -8,7 +8,7 @@ def calc(f, value):
 
 
 def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list, tolerance):
-    c: int = 0
+    c = 0
     if calc(f, xu) * calc(f, xl) >= 0:
         return None  # bisection can not be used to get the root
 
@@ -35,14 +35,14 @@ def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_
         elif f_xl_n * f_xr_n < 0:  # if true : the value of x upper will be equal xr
             xu_n = xr_n
             xl_n = xl_n
-        elif c == 1 and (
-                f_xr_n == 0 or xr_n - xr_list[-1] <= tolerance):  # exit condition if calculated root is accepted with
+        if c == 1 and (
+                f_xr_n == 0 or abs(xr_n - xr_list[-1]) <= tolerance):  # exit condition if calculated root is accepted with
             # respect to tolerance or exact solution
             print("Found solution.")
             xr_list.append(xr_n)  # adding xr to its list
             return xr_list[-1]
         xr_list.append(xr_n)  # adding xr to its list
-        c = 1
+        c=1
     return xr_list[-1]
 
 
