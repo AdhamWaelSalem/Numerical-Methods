@@ -1,10 +1,12 @@
+import sympy
 from sympy import *
 from numpy import sin, cos, tan, cosh, tanh, sinh
 from math import e
 
+
 def calc(f, value):
     x = value
-    return round(eval(f),7)
+    return eval(f)
 
 
 def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list, tolerance):
@@ -37,21 +39,23 @@ def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_
             xu_n = xr_n
             xl_n = xl_n
         if c == 1 and (
-                f_xr_n == 0 or abs((xr_n - xr_list[-1])/xr_n) <= tolerance):  # exit condition if calculated root is accepted with
+                f_xr_n == 0 or abs(
+            (xr_n - xr_list[-1]) / xr_n) <= tolerance):  # exit condition if calculated root is accepted with
             # respect to tolerance or exact solution
             xr_list.append(xr_n)  # adding xr to its list
             return xr_list[-1]
         xr_list.append(xr_n)  # adding xr to its list
-        c=1
+        c = 1
     return xr_list[-1]
 
 
-def newton_raphson(f, x, iterations, tolerance, xi_list, xinew_list):
+def newton_raphson(f, xv, iterations, tolerance, xi_list, xinew_list):
+    x = sympy.Symbol('x')
     for n in range(1, iterations + 1):
-        h = calc(f, x) / (Derivative(f, x)).doit()  # calculating second term of newton raphson
-        xi_list.append(x)  # adding xi to its list
+        h = calc(f, xv) / calc(sympy.diff(f, x), xv)  # calculating second term of newton raphson
+        xi_list.append(xv)  # adding xi to its list
         x = x - h  # calculating xi+1
-        xinew_list.append(x)  # adding xi+1 to its list
+        xinew_list.append(xv)  # adding xi+1 to its list
         if abs(h) <= tolerance:  # exit condition if root value is accepted with respect to tolerance
-            return x
-    return x  # returning resulted root after maximum  iterations have been done
+            return xv
+    return xv  # returning resulted root after maximum  iterations have been done

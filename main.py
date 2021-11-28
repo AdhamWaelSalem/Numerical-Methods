@@ -35,4 +35,8 @@ if __name__ == "__main__":
 
     print(df)
 
+    #xi_list = []
+    #xinew_list = []
+    #functions.newton_raphson(f, -20, 20, 0.001, xi_list, xinew_list)
+
     sys.exit(app.exec_())
