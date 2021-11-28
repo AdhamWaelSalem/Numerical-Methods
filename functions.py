@@ -1,6 +1,6 @@
 from sympy import *
 from numpy import sin, cos, tan, cosh, tanh, sinh
-
+from math import e
 
 def calc(f, value):
     x = value
