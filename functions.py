@@ -9,6 +9,7 @@ def calc(f, value):
 
 def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list, tolerance):
     c = 0
+
     if calc(f, xu) * calc(f, xl) >= 0:
         return None  # bisection can not be used to get the root
 

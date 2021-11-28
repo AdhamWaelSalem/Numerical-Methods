@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import functions
 
+
 class Ui_func_input(object):
     def setupUi(self, myWindow):
         myWindow.setObjectName("func_input")
@@ -81,18 +82,15 @@ class Ui_func_input(object):
     def retranslateUi(self, myWindow):
         _translate = QtCore.QCoreApplication.translate
         myWindow.setWindowTitle(_translate("myWindow", "MainWindow"))
+
         self.label3.setText(_translate("myWindow", "Tolerance"))
         self.label2.setText(_translate("myWindow", "Maximum Number of Iterations"))
+
         self.method_options.setItemText(0, _translate("myWindow", "Bisection"))
         self.method_options.setItemText(1, _translate("myWindow", "False-Position"))
         self.method_options.setItemText(2, _translate("myWindow", "Newton-Raphson"))
         self.method_options.setItemText(3, _translate("myWindow", "Secant"))
         self.method_options.setItemText(4, _translate("myWindow", "Fixed Point"))
-        self.method_options.activated.connect(self.activated)
-
-
-        self.file_rbutton.toggled.connect(self.checked)
-
 
         self.calculate_button.setText(_translate("myWindow", "Calculate"))
         self.method_name_label.setText(_translate("myWindow", "Bisection Method"))
@@ -101,6 +99,11 @@ class Ui_func_input(object):
         self.function_rbutton.setText(_translate("myWindow", "Function"))
         self.file_rbutton.setText(_translate("myWindow", "File Name"))
 
+        self.iterations_input.setText("50")
+        self.tolerance_input.setText("0.01")
+
+        self.method_options.activated.connect(self.activated)
+        self.file_rbutton.toggled.connect(self.checked)
         self.calculate_button.clicked.connect(self.clicked)
 
     def checked(self):
@@ -144,20 +147,42 @@ class Ui_func_input(object):
             self.range_label2.setText('End')
 
     def clicked(self):
+        xl_list = []
+        f_xl_list = []
+        xu_list = []
+        f_xu_list = []
+        xr_list = []
+        f_xr_list = []
+
         index = self.method_options.currentIndex()
-        maxIterations = self.iterations_input.text()
-        tolerance = self.tolerance_input.text()
-        function = self.func_input.text()
+
+        if self.iterations_input.text().strip() == "":
+            maxIterations = 50
+        else:
+            maxIterations = self.iterations_input.text()
+
+        if self.tolerance_input.text().strip() == "":
+            tolerance = 0.01
+        else:
+            tolerance = self.tolerance_input.text()
+
+        if self.function_rbutton.isChecked():
+            function = self.func_input.text()
+        else:
+            file_name = self.fileName_input.text() + ".txt"
+            with open(file_name, 'r') as f:
+                function = f.read()
+                f.close()
+
         function = function.replace('^', '**')
-        file_name = self.fileName_input.text()
-        with open('input.txt', 'r') as f:
-            function = f.read()
-            f.close()
-            print(function)
+
         if index == 0:
             method = "bisection"
             xu = self.range_input1.text()
             xl = self.range_input2.text()
+            functions.bisection(function, xu, xl, maxIterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list,
+                                f_xr_list,
+                                tolerance)
         elif index == 1:
             method = "false position"
         elif index == 2:
@@ -166,12 +191,3 @@ class Ui_func_input(object):
             method = "secant"
         else:
             method = "fixed point"
-
-        xl_list = []
-        f_xl_list = []
-        xu_list = []
-        f_xu_list = []
-        xr_list = []
-        f_xr_list = []
-        print(tolerance)
-        print(functions.bisection(function, xu, xl, maxIterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list, tolerance))
