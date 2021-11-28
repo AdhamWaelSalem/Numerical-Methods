@@ -4,7 +4,7 @@ from math import e
 
 def calc(f, value):
     x = value
-    return eval(f)
+    return round(eval(f),7)
 
 
 def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list, tolerance):
@@ -39,7 +39,6 @@ def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_
         if c == 1 and (
                 f_xr_n == 0 or abs((xr_n - xr_list[-1])/xr_n) <= tolerance):  # exit condition if calculated root is accepted with
             # respect to tolerance or exact solution
-            print("Found solution.")
             xr_list.append(xr_n)  # adding xr to its list
             return xr_list[-1]
         xr_list.append(xr_n)  # adding xr to its list
