@@ -11,7 +11,7 @@ if __name__ == "__main__":
     ui.setupUi(myWindow)
     myWindow.show()
     x = 60
-    f = 'x^4-2*x^3-4*x^2-4*x+4'
+    f = 'e^x'
     f = f.replace('^', '**')
     xl_list = []
     f_xl_list = []
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     f_xu_list = []
     xr_list = []
     f_xr_list = []
-    #functions.bisection(f, 2, 0, 20, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list, 0.01)
-    #print(xr_list)
-    #print(f_xr_list)
+    print(
+        functions.bisection(f, 2, 0,20, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list,0.01))
+    print(xr_list)
     sys.exit(app.exec_())
