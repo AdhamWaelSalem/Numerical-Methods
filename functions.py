@@ -62,10 +62,12 @@ def bisection(f, xu, xl, iterations, tolerance):
     return data, n
 
 
-def newton_raphson(f, xi, iterations, tolerance, xi_list, xinew_list):
+def newton_raphson(f, xi, iterations, tolerance):
     from sympy import Symbol, Derivative
     der = diff_f_at_point(f)
     error = []
+    xi_list = []
+    xinew_list = []
     for n in range(1, iterations + 1):
         fx = calc(f, xi)
         dfx = calc(der, xi)

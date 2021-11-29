@@ -1,4 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+import draft
 import functions
 import table
 import sys
@@ -37,6 +39,7 @@ class Ui_myWindow(object):
         self.method_options.addItem("")
         self.method_options.addItem("")
         self.method_options.addItem("")
+        self.method_options.addItem("")
 
         self.calculate_button = QtWidgets.QPushButton(self.centralwidget)
         self.calculate_button.setGeometry(QtCore.QRect(260, 450, 121, 23))
@@ -61,7 +64,7 @@ class Ui_myWindow(object):
         self.range_label1.setAlignment(QtCore.Qt.AlignCenter)
 
         self.range_label2 = QtWidgets.QLabel(self.centralwidget)
-        self.range_label2.setGeometry(QtCore.QRect(510, 200, 31, 16))
+        self.range_label2.setGeometry(QtCore.QRect(510, 200, 35, 20))
         self.range_label2.setFont(font)
         self.range_label2.setAlignment(QtCore.Qt.AlignCenter)
 
@@ -92,6 +95,7 @@ class Ui_myWindow(object):
         self.method_options.setItemText(2, _translate("myWindow", "Newton-Raphson"))
         self.method_options.setItemText(3, _translate("myWindow", "Secant"))
         self.method_options.setItemText(4, _translate("myWindow", "Fixed Point"))
+        self.method_options.setItemText(5, _translate("myWindow", "Modified Secant"))
 
         self.calculate_button.setText(_translate("myWindow", "Calculate"))
         self.method_name_label.setText(_translate("myWindow", "Bisection Method"))
@@ -101,7 +105,7 @@ class Ui_myWindow(object):
         self.file_rbutton.setText(_translate("myWindow", "File Name"))
 
         self.iterations_input.setText("50")
-        self.tolerance_input.setText("0.01")
+        self.tolerance_input.setText("0.0001")
 
         self.method_options.activated.connect(self.activated)
         self.file_rbutton.toggled.connect(self.checked)
@@ -137,15 +141,23 @@ class Ui_myWindow(object):
             self.range_label1.setText('Initial Guess')
             self.range_input2.setEnabled(False)
         elif index == 3:
+            self.range_input2.setEnabled(True)
             self.method_name_label.setText("Secant Method")
-            self.range_label1.setText('Initial Guess')
-            self.range_label2.setText('')
+            self.range_label1.setText('Xi-1')
+            self.range_label2.setText('Xi')
+
+        elif index == 4:
             self.range_input2.setEnabled(False)
+            self.method_name_label.setText("Fixed Point Method")
+            self.range_label1.setText('Starting Point')
+            self.range_label2.setText('')
+
         else:
             self.range_input2.setEnabled(True)
-            self.method_name_label.setText("Fixed Point Method")
-            self.range_label1.setText('Start')
-            self.range_label2.setText('End')
+            self.range_input2.setText('0.01')
+            self.range_label1.setText("Xi")
+            self.range_label2.setText("Delta")
+            self.method_name_label.setText("Modified Secant Method")
 
     def clicked(self):
         index = self.method_options.currentIndex()
@@ -156,7 +168,7 @@ class Ui_myWindow(object):
             maxIterations = self.iterations_input.text()
 
         if self.tolerance_input.text().strip() == "":
-            tolerance = 0.01
+            tolerance = 0.0001
         else:
             tolerance = self.tolerance_input.text()
 
@@ -178,14 +190,37 @@ class Ui_myWindow(object):
             data, rows = functions.bisection(function, int(xu), int(xl), int(maxIterations), float(tolerance))
         elif index == 1:
             method = "false position"
+            columns = 7
+            xu = self.range_input1.text()
+            xl = self.range_input2.text()
+            data, rows = draft.falsePosition(function, int(xl), int(xu), float(tolerance), int(maxIterations))
         elif index == 2:
             method = "newton raphson"
+            columns = 3
+            xi = self.range_input1.text()
+            data, rows = functions.newton_raphson(function, int(xi), int(maxIterations), float(tolerance))
         elif index == 3:
             method = "secant"
-        else:
+            columns = 6
+            x = self.range_input1.text()
+            xi = self.range_input2.text()
+            data, rows = draft.Secant(function, int(x), int(xi), float(tolerance), int(maxIterations))
+        elif index == 4:
             method = "fixed point"
+            columns = 3
+            x = self.range_input1.text()
+            data, rows = draft.fixedPoint(function, int(x), float(tolerance), int(maxIterations))
+        else:
+            method = "modified secant"
+            columns = 4
+            if self.range_input2.text().strip() == "":
+                delta = 0.01
+            else:
+                delta = self.range_input2.text()
+            x = self.range_input1.text()
+            data, rows = draft.ModefiedSecant(function, int(x), float(delta), float(tolerance), int(maxIterations))
 
         self.outputWindow = QtWidgets.QMainWindow()
-        self.ui2 = table2.Ui_outputWindow()
+        self.ui2 = table.Ui_outputWindow()
         self.ui2.setupUi(self.outputWindow, data, rows, columns)
         self.outputWindow.show()
