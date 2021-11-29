@@ -74,10 +74,13 @@ def newton_raphson(f, xi, iterations, tolerance):
         h = fx / dfx  # calculating second term of newton raphson
         temp = xi
         xi = xi - h  # calculating xi+1
-        error.append(abs(h/xi))
+
+        error.append(abs(h / xi))
+        xi_list.append(temp)  # adding xi to its list
+        xinew_list.append(xi)
+
         if error[-1] <= tolerance:  # exit condition if root value is accepted with respect to tolerance
             break
-        xi_list.append(temp)  # adding xi to its list
-        xinew_list.append(xi)  # adding xi+1 to its list
+          # adding xi+1 to its list
     data = {'Xi': xi_list, 'Xi+1': xinew_list, 'Error': error}
     return data, n  # returning resulted root after maximum  iterations have been done
