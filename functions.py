@@ -2,6 +2,28 @@ import sympy
 from sympy import *
 from numpy import sin, cos, tan, cosh, tanh, sinh
 from math import e
+import matplotlib.pyplot as plt
+
+
+def graph(f):
+    x = []
+    y = []
+    for n in range(-10, 10):
+        x.append(n)
+        y.append(calc(f, n))
+
+    plt.plot(x, y)
+
+    # naming the x axis
+    plt.xlabel('x - axis')
+    # naming the y axis
+    plt.ylabel('y - axis')
+
+    # giving a title to my graph
+    plt.title('Graph')
+
+    # function to show the plot
+    plt.show()
 
 
 def diff_f_at_point(f):
@@ -82,9 +104,3 @@ def newton_raphson(f, xi, iterations, tolerance):
 
     data = {'Xi': xi_list, 'Xi+1': xinew_list, 'Error': error}
     return data, n  # return table
-
-
-
-
-
-
