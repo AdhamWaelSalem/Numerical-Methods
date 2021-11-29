@@ -193,7 +193,7 @@ class Ui_myWindow(object):
             columns = 7
             xu = self.range_input1.text()
             xl = self.range_input2.text()
-            data, rows = functions.false_position(function, int(xu), int(xl), int(maxIterations), float(tolerance))
+            data, rows = draft.falsePosition(function, int(xl), int(xu), float(tolerance), int(maxIterations))
         elif index == 2:
             method = "newton raphson"
             columns = 3
