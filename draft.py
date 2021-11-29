@@ -2,7 +2,7 @@ import sys
 
 import numpy
 import functions
-import table
+
 
 def generateStraightLine(x1, y1, x2, y2):
     m = (y1 - y2) / (x1 - x2)
@@ -118,20 +118,3 @@ def ModefiedSecant(fx, xValue, delta, tolerance, iterations):
     data = {'X': x, 'f(X)': y, 'Xnext': x_next, 'Error': error}
     return data, i
 
-
-
-
-    # # Fixed Point
-    # x = [2]
-    # gx = "(2*x-1)/x"
-    # error = fixedPoint(gx, x, tolerance, iterations)
-    # print(numpy.column_stack((x, error)))
-    #
-    # # Secant
-    # x_prior = [0]
-    # x_current = [1]
-    # x_successive, fx_prior, fx_current, error = Secant(fx, x_prior, x_current, tolerance, iterations)
-    #
-    # # Modified Secant
-    # x = [1]
-    # y, x_next, error = ModefiedSecant(fx, x, 0.01, tolerance, iterations)

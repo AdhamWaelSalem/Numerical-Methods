@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import functions
-import table2
+import table
 import sys
 
 
