@@ -10,7 +10,9 @@ def generateStraightLine(x1, y1, x2, y2):
     return m, c
 
 
-def falsePosition(fx, xl, xu, tolerance, iterations):
+def falsePosition(fx, xlValue, xuValue, tolerance, iterations):
+    xl = [xlValue]
+    xu = [xuValue]
     fxl = [functions.calc(fx, xl[-1])]
     fxu = [functions.calc(fx, xu[-1])]
     # Validations will still add them or in input directly
@@ -29,8 +31,7 @@ def falsePosition(fx, xl, xu, tolerance, iterations):
         m, c = generateStraightLine(xl[-1], fxl[-1], xu[-1], fxu[-1])
         xr.append(-c / m)
         fxr.append(functions.calc(fx, xr[-1]))
-        if fxr[-1] == 0:
-            break
+
         print(f"iteration = {i}")
         if i > 0:
             error.append(abs((xr[-1] - xr[-2]) / xr[-1]))
@@ -38,6 +39,8 @@ def falsePosition(fx, xl, xu, tolerance, iterations):
                 f"xl:{xl[-1]} \t xu:{xu[-1]} \t fxl:{fxl[-1]}  \tfxu:{fxu[-1]} \t xr:{xr[-1]}  \t fxr:{fxr[-1]} \t error:{error[-1]}")
             if error[-1] <= tolerance:
                 break
+        if fxr[-1] == 0:
+            break
         if fxr[-1] * fxl[-1] < 0:
             xu.append(xr[-1])
             xl.append(xl[-1])
@@ -48,24 +51,32 @@ def falsePosition(fx, xl, xu, tolerance, iterations):
         fxl.append(functions.calc(fx, xl[-1]))
         fxu.append(functions.calc(fx, xu[-1]))
         i += 1
-    return i, fxl, fxu, xr, fxr, error
+    data = {'Xu': xu, 'Xl': xl, 'Xr': xr, 'f(Xu)': fxu, 'f(Xl)': fxl, 'f(Xr)': fxr,
+                'Error': error}
+    return data, i
 
 
 def fixedPoint(gx, x, tolerance, iterations):
     # check for convergence
     error = [None]
+    xold = [x]
+    xnew = []
     i = 0
     while i < iterations:
-        x.append(functions.calc(gx, x[-1]))
-        error.append(abs((x[-1] - x[-2]) / x[-1]))
+        xnew.append(functions.calc(gx, xold[-1]))
+        error.append(abs((xnew[-1] - xold[-1]) / xnew[-1]))
         if error[-1] <= tolerance:
             break
+        xold.append(xnew[-1])
         i += 1
-    return error
+    data = {'Xold': xold, 'Xnew': xnew, 'Error':error}
+    return data, i
 
 
-def Secant(fx, x0, x1, tolerance, iterations):
+def Secant(fx, xl, xu, tolerance, iterations):
     error = [None]
+    x0 = [xl]
+    x1 = [xu]
     fx0 = []
     fx1 = []
     x2 = []
@@ -83,10 +94,12 @@ def Secant(fx, x0, x1, tolerance, iterations):
         x0.append(x1[-1])
         x1.append(x2[-1])
         i += 1
-    return fx0, fx1, x2, error
+    data = {'Xi-1': x0, 'Xi': x1, 'f(Xi-1)': fx0, 'f(Xi)': fx1, 'Xi+1': x2, 'Error': error}
+    return data, i
 
 
-def ModefiedSecant(fx, x, delta, tolerance, iterations):
+def ModefiedSecant(fx, xValue, delta, tolerance, iterations):
+    x = [xValue]
     error = [None]
     y = []
     x_next = []
@@ -102,29 +115,11 @@ def ModefiedSecant(fx, x, delta, tolerance, iterations):
             break
         x.append(x_next[-1])
         i += 1
-    return y, x_next, error
+    data = {'X': x, 'f(X)': y, 'Xnext': x_next, 'Error': error}
+    return data, i
 
 
-if __name__ == "__main__":
-    # False Position
-    xl = [0]
-    xu = [2]
-    fx = "x**4-2*x**3-4*x**2-4*x+4"
-    tolerance = 0.00000001
-    iterations = 100
-    i, fxl, fxu, xr, fxr, error = falsePosition(fx, xl, xu, tolerance, iterations)
 
-    # trying to draw table
-    data = {
-        'Iteration': range(i),
-        'X_lower': xl,
-        'X_upper': xu,
-        'f(x_lower)': fxl,
-        'f(x_upper)': fxu,
-        'X_r': xr,
-        'f(x_r)': fxr,
-        'Error': error
-    }
 
     # # Fixed Point
     # x = [2]

@@ -1,10 +1,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import functions
+import table2
+import sys
 
 
-class Ui_func_input(object):
+class Ui_myWindow(object):
     def setupUi(self, myWindow):
-        myWindow.setObjectName("func_input")
         myWindow.resize(631, 481)
         self.centralwidget = QtWidgets.QWidget(myWindow)
 
@@ -147,13 +148,6 @@ class Ui_func_input(object):
             self.range_label2.setText('End')
 
     def clicked(self):
-        xl_list = []
-        f_xl_list = []
-        xu_list = []
-        f_xu_list = []
-        xr_list = []
-        f_xr_list = []
-
         index = self.method_options.currentIndex()
 
         if self.iterations_input.text().strip() == "":
@@ -178,10 +172,10 @@ class Ui_func_input(object):
 
         if index == 0:
             method = "bisection"
+            columns = 7
             xu = self.range_input1.text()
             xl = self.range_input2.text()
-            functions.bisection(function, xu, xl, maxIterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list,
-                                f_xr_list, tolerance)
+            data, rows = functions.bisection(function, int(xu), int(xl), int(maxIterations), float(tolerance))
         elif index == 1:
             method = "false position"
         elif index == 2:
@@ -190,3 +184,8 @@ class Ui_func_input(object):
             method = "secant"
         else:
             method = "fixed point"
+
+        self.outputWindow = QtWidgets.QMainWindow()
+        self.ui2 = table2.Ui_outputWindow()
+        self.ui2.setupUi(self.outputWindow, data, rows, columns)
+        self.outputWindow.show()

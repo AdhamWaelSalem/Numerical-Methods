@@ -14,7 +14,15 @@ def calc(f, value):
     return eval(f)
 
 
-def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_list, f_xr_list, tolerance):
+def bisection(f, xu, xl, iterations, tolerance):
+    xl_list = []
+    f_xl_list = []
+    xu_list = []
+    f_xu_list = []
+    xr_list = []
+    f_xr_list = []
+    error_list = [None]
+
     if calc(f, xu) * calc(f, xl) >= 0:
         return None  # bisection can not be used to get the root
 
@@ -41,28 +49,33 @@ def bisection(f, xu, xl, iterations, xl_list, xu_list, f_xl_list, f_xu_list, xr_
         elif f_xl_n * f_xr_n < 0:  # if true : the value of x upper will be equal xr
             xu_n = xr_n
             xl_n = xl_n
-        if n >= 1 and (
-                f_xr_n == 0 or abs(
-            (xr_n - xr_list[-1]) / xr_n) <= tolerance):  # exit condition if calculated root is accepted with
-            # respect to tolerance or exact solution
-            xr_list.append(xr_n)  # adding xr to its list
-            return xr_list[-1]
         xr_list.append(xr_n)  # adding xr to its list
-    return xr_list[-1]
+        if n > 1:
+            error_list.append(abs((xr_list[-1] - xr_list[-2]) / xr_list[-1]))
+            if error_list[-1] <= tolerance:
+                break
+        if f_xr_n == 0:
+            break
+
+    data = {'Xu': xu_list, 'Xl': xl_list, 'Xr': xr_list, 'f(Xu)': f_xu_list, 'f(Xl)': f_xl_list, 'f(Xr)': f_xr_list,
+            'Error': error_list}
+    return data, n
 
 
 def newton_raphson(f, xi, iterations, tolerance, xi_list, xinew_list):
     from sympy import Symbol, Derivative
     der = diff_f_at_point(f)
+    error = []
     for n in range(1, iterations + 1):
-        fx=calc(f,xi)
-        dfx=calc(der,xi)
+        fx = calc(f, xi)
+        dfx = calc(der, xi)
         h = fx / dfx  # calculating second term of newton raphson
-        temp=xi
+        temp = xi
         xi = xi - h  # calculating xi+1
-        if abs(h) <= tolerance:  # exit condition if root value is accepted with respect to tolerance
-            return xi
+        error.append(abs(h/xi))
+        if error[-1] <= tolerance:  # exit condition if root value is accepted with respect to tolerance
+            break
         xi_list.append(temp)  # adding xi to its list
         xinew_list.append(xi)  # adding xi+1 to its list
-
-    return xi  # returning resulted root after maximum  iterations have been done
+    data = {'Xi': xi_list, 'Xi+1': xinew_list, 'Error': error}
+    return data, n  # returning resulted root after maximum  iterations have been done

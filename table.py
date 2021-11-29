@@ -3,10 +3,9 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QWidget, QAction, QTableW
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 import sys
+import functions
 
-data = {'col1': ['1', '2', '3', '4'],
-        'col2': ['1', '2', '1', '3'],
-        'col3': ['1', '1', '2', '1']}
+data, rows = functions.bisection('x**4-2*x**3-4*x**2-4*x+4', 2, 0, 20, 0.01)
 
 
 class TableView(QTableWidget):
@@ -19,20 +18,21 @@ class TableView(QTableWidget):
 
     def setData(self):
         horHeaders = []
-        for n, key in enumerate(sorted(self.data.keys())):
+        for n, key in enumerate(self.data.keys()):
             horHeaders.append(key)
             for m, item in enumerate(self.data[key]):
-                newitem = QTableWidgetItem(item)
+                newitem = QTableWidgetItem(str(item))
                 self.setItem(m, n, newitem)
         self.setHorizontalHeaderLabels(horHeaders)
 
 
-def main(args, data):
+def main(args):
     app = QApplication(args)
-    table = TableView(data)
+    table = TableView(data, rows, 6)
     table.show()
+    print(data)
     sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
-    main(sys.argv, data)
+    main(sys.argv)
