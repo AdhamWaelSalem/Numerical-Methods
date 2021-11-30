@@ -4,7 +4,7 @@ import draft
 import functions
 import table
 import sys
-
+import time
 
 class Ui_myWindow(object):
     def setupUi(self, myWindow):
@@ -105,7 +105,7 @@ class Ui_myWindow(object):
         self.file_rbutton.setText(_translate("myWindow", "File Name"))
 
         self.iterations_input.setText("50")
-        self.tolerance_input.setText("0.0001")
+        self.tolerance_input.setText("0.00001")
 
         self.method_options.activated.connect(self.activated)
         self.file_rbutton.toggled.connect(self.checked)
@@ -168,7 +168,7 @@ class Ui_myWindow(object):
             maxIterations = self.iterations_input.text()
 
         if self.tolerance_input.text().strip() == "":
-            tolerance = 0.0001
+            tolerance = 0.00001
         else:
             tolerance = self.tolerance_input.text()
 
@@ -187,29 +187,39 @@ class Ui_myWindow(object):
             columns = 7
             xu = self.range_input1.text()
             xl = self.range_input2.text()
-            data, rows = functions.bisection(function, int(xu), int(xl), int(maxIterations), float(tolerance))
+            startTime = time.time()
+            data, rows = functions.bisection(function, float(xu), float(xl), int(maxIterations), float(tolerance))
+            runTime = time.time() - startTime
         elif index == 1:
             method = "false position"
             columns = 7
             xu = self.range_input1.text()
             xl = self.range_input2.text()
-            data, rows = draft.falsePosition(function, int(xl), int(xu), float(tolerance), int(maxIterations))
+            startTime = time.time()
+            data, rows = draft.falsePosition(function, float(xl), float(xu), float(tolerance), int(maxIterations))
+            runTime = time.time() - startTime
         elif index == 2:
             method = "newton raphson"
             columns = 3
             xi = self.range_input1.text()
-            data, rows = functions.newton_raphson(function, int(xi), int(maxIterations), float(tolerance))
+            startTime = time.time()
+            data, rows = functions.newton_raphson(function, float(xi), int(maxIterations), float(tolerance))
+            runTime = time.time() - startTime
         elif index == 3:
             method = "secant"
             columns = 6
             x = self.range_input1.text()
             xi = self.range_input2.text()
-            data, rows = draft.Secant(function, int(x), int(xi), float(tolerance), int(maxIterations))
+            startTime = time.time()
+            data, rows = draft.Secant(function, float(x), float(xi), float(tolerance), int(maxIterations))
+            runTime = time.time() - startTime
         elif index == 4:
             method = "fixed point"
             columns = 3
             x = self.range_input1.text()
-            data, rows = draft.fixedPoint(function, int(x), float(tolerance), int(maxIterations))
+            startTime = time.time()
+            data, rows = draft.fixedPoint(function, float(x), float(tolerance), int(maxIterations))
+            runTime = time.time() - startTime
         else:
             method = "modified secant"
             columns = 4
@@ -218,9 +228,11 @@ class Ui_myWindow(object):
             else:
                 delta = self.range_input2.text()
             x = self.range_input1.text()
-            data, rows = draft.ModefiedSecant(function, int(x), float(delta), float(tolerance), int(maxIterations))
+            startTime = time.time()
+            data, rows = draft.ModefiedSecant(function, float(x), float(delta), float(tolerance), int(maxIterations))
+            runTime = time.time() - startTime
 
         self.outputWindow = QtWidgets.QMainWindow()
         self.ui2 = table.Ui_outputWindow()
-        self.ui2.setupUi(self.outputWindow, data, rows, columns)
+        self.ui2.setupUi(self.outputWindow, data, rows, columns, runTime)
         self.outputWindow.show()
