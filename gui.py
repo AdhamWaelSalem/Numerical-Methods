@@ -266,12 +266,12 @@ class Ui_myWindow(object):
             return
 
         # if the second required input is empty display error message
-        if (index != 2 or index != 4 or index != 5) and self.range_input2.text().strip() == '':
+        if (index != 2 and index != 4 and index != 5) and self.range_input2.text().strip() == '':
             self.range2_error_msg.setText('This Field Can\'t be Empty')
             return
 
         # if the second input is not a number display error message
-        if (index != 2 or index != 4 or index != 5) and not is_number(self.range_input2.text()):
+        if (index != 2 and index != 4 and index != 5) and not is_number(self.range_input2.text()):
             self.range2_error_msg.setText('Enter a Number')
             return
 
@@ -312,7 +312,7 @@ class Ui_myWindow(object):
             xu = self.range_input1.text()
             xl = self.range_input2.text()
             startTime = time.time()
-            data, rows, root, precision = functions.bisection(function, float(xu), float(xl), int(maxIterations),
+            data, rows, root, precision, message = functions.bisection(function, float(xu), float(xl), int(maxIterations),
                                                               float(tolerance))
             runTime = time.time() - startTime
         elif index == 1:
@@ -321,7 +321,7 @@ class Ui_myWindow(object):
             xu = self.range_input1.text()
             xl = self.range_input2.text()
             startTime = time.time()
-            data, rows, root, precision = draft.falsePosition(function, float(xl), float(xu), float(tolerance),
+            data, rows, root, precision, message = draft.falsePosition(function, float(xl), float(xu), float(tolerance),
                                                               int(maxIterations))
             runTime = time.time() - startTime
         elif index == 2:
@@ -329,7 +329,7 @@ class Ui_myWindow(object):
             columns = 3
             xi = self.range_input1.text()
             startTime = time.time()
-            data, rows, root, precision = functions.newton_raphson(function, float(xi), int(maxIterations),
+            data, rows, root, precision, message = functions.newton_raphson(function, float(xi), int(maxIterations),
                                                                    float(tolerance))
             runTime = time.time() - startTime
         elif index == 3:
@@ -338,7 +338,7 @@ class Ui_myWindow(object):
             x = self.range_input1.text()
             xi = self.range_input2.text()
             startTime = time.time()
-            data, rows, root, precision = draft.Secant(function, float(x), float(xi), float(tolerance),
+            data, rows, root, precision, message = draft.Secant(function, float(x), float(xi), float(tolerance),
                                                        int(maxIterations))
             runTime = time.time() - startTime
         elif index == 4:
@@ -346,7 +346,7 @@ class Ui_myWindow(object):
             columns = 3
             x = self.range_input1.text()
             startTime = time.time()
-            data, rows, root, precision = draft.fixedPoint(function, float(x), float(tolerance), int(maxIterations))
+            data, rows, root, precision, message = draft.fixedPoint(function, float(x), float(tolerance), int(maxIterations))
             runTime = time.time() - startTime
         else:
             method = "Modified Secant"
@@ -357,12 +357,12 @@ class Ui_myWindow(object):
                 delta = self.range_input2.text()
             x = self.range_input1.text()
             startTime = time.time()
-            data, rows, root, precision = draft.ModefiedSecant(function, float(x), float(delta), float(tolerance),
+            data, rows, root, precision, message = draft.ModefiedSecant(function, float(x), float(delta), float(tolerance),
                                                                int(maxIterations))
             runTime = time.time() - startTime
 
         # Passing the data to the output window to display the output
         self.outputWindow = QtWidgets.QMainWindow()
         self.ui2 = table.Ui_outputWindow()
-        self.ui2.setupUi(self.outputWindow, data, rows, columns, runTime, function_temp, root, precision, method)
+        self.ui2.setupUi(self.outputWindow, data, rows, columns, runTime, function_temp, root, precision, method, message)
         self.outputWindow.show()

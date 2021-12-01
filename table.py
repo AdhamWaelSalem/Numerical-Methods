@@ -1,9 +1,26 @@
+from functools import partial
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QTableWidgetItem
+import functions
+
+
+# Function to check for the occurrence of an error
+def checkError(message):
+    if message == '':
+        return 0
+    return 1
+
+
+# Function to plot the Graph of the Function
+def clicked(function, root):
+    function = function.replace('^', '**')
+    functions.graph(function, root[-1])
+
 
 class Ui_outputWindow(object):
     # Setting up the Components of the Window and their Geometrical Dimensions
-    def setupUi(self, outputWindow, data, rows, columns, time, function, root, precision, method):
+    def setupUi(self, outputWindow, data, rows, columns, time, function, root, precision, method, message):
         outputWindow.resize(800, 600)
 
         self.centralwidget = QtWidgets.QWidget(outputWindow)
@@ -14,10 +31,13 @@ class Ui_outputWindow(object):
         self.tableWidget.setGeometry(QtCore.QRect(0, 100, 801, 331))
         self.tableWidget.setObjectName("tableWidget")
 
-        # Setting Font Family and font size
+        # Setting Fonts Family and font size
         font = QtGui.QFont()
         font.setFamily("Segoe UI Light")
         font.setPointSize(10)
+        font2 = QtGui.QFont()
+        font2.setPointSize(9)
+        font2.setBold(True)
 
         # Setting Labels
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -49,22 +69,21 @@ class Ui_outputWindow(object):
         self.root_label = QtWidgets.QLabel(self.centralwidget)
         self.root_label.setGeometry(QtCore.QRect(60, 480, 241, 16))
         self.root_label.setFont(font)
-        self.root_label.setText(str(root))
+
 
         self.precision_label = QtWidgets.QLabel(self.centralwidget)
         self.precision_label.setGeometry(QtCore.QRect(90, 510, 151, 16))
         self.precision_label.setFont(font)
-        self.precision_label.setText(str(precision))
+
 
         self.time_lable = QtWidgets.QLabel(self.centralwidget)
         self.time_lable.setGeometry(QtCore.QRect(120, 540, 181, 16))
         self.time_lable.setFont(font)
-        self.time_lable.setText(str(time))
+
 
         self.iterations_label = QtWidgets.QLabel(self.centralwidget)
         self.iterations_label.setGeometry(QtCore.QRect(150, 570, 141, 16))
         self.iterations_label.setFont(font)
-        self.iterations_label.setText(str(rows))
 
         font.setPointSize(20)
         self.method_label = QtWidgets.QLabel(self.centralwidget)
@@ -73,26 +92,48 @@ class Ui_outputWindow(object):
         self.method_label.setAlignment(QtCore.Qt.AlignCenter)
         self.method_label.setText(method)
 
-        # Setting table rows and columns
-        # Inserting the data into the Table
-        self.data = data
-        self.tableWidget.setRowCount(rows)
-        self.tableWidget.setColumnCount(columns)
-        self.setDataItems(data)
+        #Setting Push Button
+        self.graph = QtWidgets.QPushButton(self.centralwidget)
+        self.graph.setGeometry(QtCore.QRect(374, 560, 91, 31))
 
+        # Error Message Information
+        self.error_msg = QtWidgets.QLabel(self.centralwidget)
+        self.error_msg.setGeometry(QtCore.QRect(486, 442, 291, 141))
+        self.error_msg.setFont(font2)
+        self.error_msg.setAlignment(QtCore.Qt.AlignCenter)
+
+        self.message = message
+
+        # Checking if there is an error message
+        # if the error message is empty then the function executes successfully and the data is showed
+        # if the error message not empty then the function diverges --> show the error message
+        if checkError(message) == 0:
+            self.data = data
+            self.tableWidget.setRowCount(rows)
+            self.tableWidget.setColumnCount(columns)
+            self.setDataItems(data)
+            self.iterations_label.setText(str(rows))
+            self.time_lable.setText(str(time))
+            self.precision_label.setText(str(precision[-1]))
+            self.root_label.setText(str(root[-1]))
+        else:
+            self.error_msg.setText(message)
+
+        self.graph.clicked.connect(partial(clicked, function, root))
         outputWindow.setCentralWidget(self.centralwidget)
-        self.retranslateUi(outputWindow)
+        self.retranslateUi(outputWindow, message)
         QtCore.QMetaObject.connectSlotsByName(outputWindow)
 
     # Setting the starting values of the GUI Window
-    def retranslateUi(self, outputWindow):
+    def retranslateUi(self, outputWindow, message):
         _translate = QtCore.QCoreApplication.translate
         outputWindow.setWindowTitle(_translate("outputWindow", "Output"))
-        self.label.setText(_translate("outputWindow", "Root ="))
-        self.label_2.setText(_translate("outputWindow", "Precision ="))
-        self.label_3.setText(_translate("outputWindow", "Execution Time ="))
+        self.label.setText(_translate("outputWindow", "Root = "))
+        self.label_2.setText(_translate("outputWindow", "Precision = "))
+        self.label_3.setText(_translate("outputWindow", "Execution Time = "))
         self.label_4.setText(_translate("outputWindow", "Number of Iterations = "))
         self.label_10.setText(_translate("outputWindow", "Function = "))
+        self.graph.setText(_translate("MainWindow", "Graph"))
 
     # Function to Set the data into the output table
     def setDataItems(self, data):
