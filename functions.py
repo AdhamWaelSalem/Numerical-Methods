@@ -5,14 +5,22 @@ from math import e
 import matplotlib.pyplot as plt
 
 
-def graph(f):
-    x = []
-    y = []
+def graph(f,xr,f_xr):
+    x1 = []
+    y1 = []
+    y3 = []
     for n in range(-10, 10):
-        x.append(n)
-        y.append(calc(f, n))
+        x1.append(n)
+        y1.append(calc(f, n))
+        y3.append(int(0))
 
-    plt.plot(x, y)
+
+
+    plt.plot(x1, y1)
+
+    plt.plot(x1,y3)
+    plt.plot(xr[-1], f_xr[-1], 'r*')
+    plt.legend
 
     # naming the x axis
     plt.xlabel('x - axis')
