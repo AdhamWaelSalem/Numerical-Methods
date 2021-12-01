@@ -1,22 +1,25 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QTableWidgetItem
-import gui
 
 class Ui_outputWindow(object):
+    # Setting up the Components of the Window and their Geometrical Dimensions
     def setupUi(self, outputWindow, data, rows, columns, time, function, root, precision, method):
         outputWindow.resize(800, 600)
 
         self.centralwidget = QtWidgets.QWidget(outputWindow)
         self.centralwidget.setObjectName("centralwidget")
+
+        # Setting the Table Widget
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(0, 100, 801, 331))
         self.tableWidget.setObjectName("tableWidget")
 
+        # Setting Font Family and font size
         font = QtGui.QFont()
         font.setFamily("Segoe UI Light")
         font.setPointSize(10)
 
+        # Setting Labels
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(20, 480, 34, 16))
         self.label.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -63,11 +66,6 @@ class Ui_outputWindow(object):
         self.iterations_label.setFont(font)
         self.iterations_label.setText(str(rows))
 
-        self.done_button = QtWidgets.QPushButton(self.centralwidget)
-        self.done_button.setGeometry(QtCore.QRect(640, 540, 131, 31))
-        self.done_button.setFont(font)
-
-
         font.setPointSize(20)
         self.method_label = QtWidgets.QLabel(self.centralwidget)
         self.method_label.setGeometry(QtCore.QRect(220, 10, 331, 61))
@@ -75,14 +73,18 @@ class Ui_outputWindow(object):
         self.method_label.setAlignment(QtCore.Qt.AlignCenter)
         self.method_label.setText(method)
 
+        # Setting table rows and columns
+        # Inserting the data into the Table
         self.data = data
         self.tableWidget.setRowCount(rows)
         self.tableWidget.setColumnCount(columns)
         self.setDataItems(data)
+
         outputWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(outputWindow)
         QtCore.QMetaObject.connectSlotsByName(outputWindow)
 
+    # Setting the starting values of the GUI Window
     def retranslateUi(self, outputWindow):
         _translate = QtCore.QCoreApplication.translate
         outputWindow.setWindowTitle(_translate("outputWindow", "Output"))
@@ -90,20 +92,29 @@ class Ui_outputWindow(object):
         self.label_2.setText(_translate("outputWindow", "Precision ="))
         self.label_3.setText(_translate("outputWindow", "Execution Time ="))
         self.label_4.setText(_translate("outputWindow", "Number of Iterations = "))
-        self.done_button.setText(_translate("outputWindow", "Done"))
         self.label_10.setText(_translate("outputWindow", "Function = "))
 
-
+    # Function to Set the data into the output table
     def setDataItems(self, data):
+        # headers list used to store the headers of the Table
         headers = []
+
+        # first loop to iterate over the keys and the second loop to iterate over the values
+        # Insert each element into its place in the table using dimensions n and m
         for n, key in enumerate(self.data.keys()):
             headers.append(key)
             for m, value in enumerate(self.data[key]):
                 newitem = QTableWidgetItem(str(value))
                 self.tableWidget.setItem(m, n, newitem)
+
+        # Set the headers into the table
         self.tableWidget.setHorizontalHeaderLabels(headers)
-        self.tableWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+
+        # Disable Edit Triggers to prevent the user from editing the output
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+
+        # Adjust Size Policy of both rows and columns to adjust to content
+        self.tableWidget.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
 
