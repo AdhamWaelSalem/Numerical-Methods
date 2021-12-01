@@ -81,7 +81,7 @@ def bisection(f, xu, xl, iterations, tolerance):
 
     data = {'Xu': xu_list, 'Xl': xl_list, 'Xr': xr_list, 'f(Xu)': f_xu_list, 'f(Xl)': f_xl_list, 'f(Xr)': f_xr_list,
             'Error': error_list}
-    return data, n
+    return data, n, xr_list[-1], error_list[-1]
 
 
 def newton_raphson(f, xi, iterations, tolerance):
@@ -103,4 +103,4 @@ def newton_raphson(f, xi, iterations, tolerance):
             break
 
     data = {'Xi': xi_list, 'Xi+1': xinew_list, 'Error': error}
-    return data, n  # return table
+    return data, n, xinew_list[-1], error[-1]  # return table

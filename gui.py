@@ -180,48 +180,49 @@ class Ui_myWindow(object):
                 function = f.read()
                 f.close()
 
+        function_temp = function
         function = function.replace('^', '**')
 
         if index == 0:
-            method = "bisection"
+            method = "Bisection"
             columns = 7
             xu = self.range_input1.text()
             xl = self.range_input2.text()
             startTime = time.time()
-            data, rows = functions.bisection(function, float(xu), float(xl), int(maxIterations), float(tolerance))
+            data, rows, root, precision = functions.bisection(function, float(xu), float(xl), int(maxIterations), float(tolerance))
             runTime = time.time() - startTime
         elif index == 1:
-            method = "false position"
+            method = "False Position"
             columns = 7
             xu = self.range_input1.text()
             xl = self.range_input2.text()
             startTime = time.time()
-            data, rows = draft.falsePosition(function, float(xl), float(xu), float(tolerance), int(maxIterations))
+            data, rows, root, precision = draft.falsePosition(function, float(xl), float(xu), float(tolerance), int(maxIterations))
             runTime = time.time() - startTime
         elif index == 2:
-            method = "newton raphson"
+            method = "Newton Raphson"
             columns = 3
             xi = self.range_input1.text()
             startTime = time.time()
-            data, rows = functions.newton_raphson(function, float(xi), int(maxIterations), float(tolerance))
+            data, rows, root, precision = functions.newton_raphson(function, float(xi), int(maxIterations), float(tolerance))
             runTime = time.time() - startTime
         elif index == 3:
-            method = "secant"
+            method = "Secant"
             columns = 6
             x = self.range_input1.text()
             xi = self.range_input2.text()
             startTime = time.time()
-            data, rows = draft.Secant(function, float(x), float(xi), float(tolerance), int(maxIterations))
+            data, rows, root, precision = draft.Secant(function, float(x), float(xi), float(tolerance), int(maxIterations))
             runTime = time.time() - startTime
         elif index == 4:
-            method = "fixed point"
+            method = "Fixed Point"
             columns = 3
             x = self.range_input1.text()
             startTime = time.time()
-            data, rows = draft.fixedPoint(function, float(x), float(tolerance), int(maxIterations))
+            data, rows, root, precision = draft.fixedPoint(function, float(x), float(tolerance), int(maxIterations))
             runTime = time.time() - startTime
         else:
-            method = "modified secant"
+            method = "Modified Secant"
             columns = 4
             if self.range_input2.text().strip() == "":
                 delta = 0.01
@@ -229,10 +230,10 @@ class Ui_myWindow(object):
                 delta = self.range_input2.text()
             x = self.range_input1.text()
             startTime = time.time()
-            data, rows = draft.ModefiedSecant(function, float(x), float(delta), float(tolerance), int(maxIterations))
+            data, rows, root, precision = draft.ModefiedSecant(function, float(x), float(delta), float(tolerance), int(maxIterations))
             runTime = time.time() - startTime
 
         self.outputWindow = QtWidgets.QMainWindow()
         self.ui2 = table.Ui_outputWindow()
-        self.ui2.setupUi(self.outputWindow, data, rows, columns, runTime)
+        self.ui2.setupUi(self.outputWindow, data, rows, columns, runTime, function_temp, root, precision, method)
         self.outputWindow.show()

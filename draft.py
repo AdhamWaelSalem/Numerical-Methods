@@ -53,12 +53,12 @@ def falsePosition(fx, xlValue, xuValue, tolerance, iterations):
         i += 1
     data = {'Xu': xu, 'Xl': xl, 'Xr': xr, 'f(Xu)': fxu, 'f(Xl)': fxl, 'f(Xr)': fxr,
                 'Error': error}
-    return data, i
+    return data, i+1, xr[-1], error[-1]
 
 
 def fixedPoint(gx, x, tolerance, iterations):
     # check for convergence
-    error = [None]
+    error = []
     xold = [x]
     xnew = []
     i = 0
@@ -70,11 +70,11 @@ def fixedPoint(gx, x, tolerance, iterations):
         xold.append(xnew[-1])
         i += 1
     data = {'Xold': xold, 'Xnew': xnew, 'Error':error}
-    return data, i
+    return data, i, xnew[-1], error[-1]
 
 
 def Secant(fx, xl, xu, tolerance, iterations):
-    error = [None]
+    error = []
     x0 = [xl]
     x1 = [xu]
     fx0 = []
@@ -95,12 +95,12 @@ def Secant(fx, xl, xu, tolerance, iterations):
         x1.append(x2[-1])
         i += 1
     data = {'Xi-1': x0, 'Xi': x1, 'f(Xi-1)': fx0, 'f(Xi)': fx1, 'Xi+1': x2, 'Error': error}
-    return data, i
+    return data, i+1, x2[-1], error[-1]
 
 
 def ModefiedSecant(fx, xValue, delta, tolerance, iterations):
     x = [xValue]
-    error = [None]
+    error = []
     y = []
     x_next = []
     i = 0
@@ -116,5 +116,5 @@ def ModefiedSecant(fx, xValue, delta, tolerance, iterations):
         x.append(x_next[-1])
         i += 1
     data = {'X': x, 'f(X)': y, 'Xnext': x_next, 'Error': error}
-    return data, i
+    return data, i+1, x_next[-1], error[-1]
 

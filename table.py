@@ -1,10 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QTableWidgetItem
-
+import gui
 
 class Ui_outputWindow(object):
-    def setupUi(self, outputWindow, data, rows, columns, time):
+    def setupUi(self, outputWindow, data, rows, columns, time, function, root, precision, method):
         outputWindow.resize(800, 600)
 
         self.centralwidget = QtWidgets.QWidget(outputWindow)
@@ -41,14 +41,17 @@ class Ui_outputWindow(object):
         self.func_label = QtWidgets.QLabel(self.centralwidget)
         self.func_label.setGeometry(QtCore.QRect(90, 450, 261, 16))
         self.func_label.setFont(font)
+        self.func_label.setText(function)
 
         self.root_label = QtWidgets.QLabel(self.centralwidget)
         self.root_label.setGeometry(QtCore.QRect(60, 480, 241, 16))
         self.root_label.setFont(font)
+        self.root_label.setText(str(root))
 
-        self.percision_label = QtWidgets.QLabel(self.centralwidget)
-        self.percision_label.setGeometry(QtCore.QRect(90, 510, 151, 16))
-        self.percision_label.setFont(font)
+        self.precision_label = QtWidgets.QLabel(self.centralwidget)
+        self.precision_label.setGeometry(QtCore.QRect(90, 510, 151, 16))
+        self.precision_label.setFont(font)
+        self.precision_label.setText(str(precision))
 
         self.time_lable = QtWidgets.QLabel(self.centralwidget)
         self.time_lable.setGeometry(QtCore.QRect(120, 540, 181, 16))
@@ -70,6 +73,7 @@ class Ui_outputWindow(object):
         self.method_label.setGeometry(QtCore.QRect(220, 10, 331, 61))
         self.method_label.setFont(font)
         self.method_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.method_label.setText(method)
 
         self.data = data
         self.tableWidget.setRowCount(rows)
@@ -102,6 +106,7 @@ class Ui_outputWindow(object):
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
+
 
 
 
