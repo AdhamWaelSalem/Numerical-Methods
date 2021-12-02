@@ -74,7 +74,7 @@ class Ui_outputWindow(object):
 
         # Error Message Information
         self.error_msg = QtWidgets.QLabel(self.centralwidget)
-        self.error_msg.setGeometry(QtCore.QRect(400, 442, 450, 141))
+        self.error_msg.setGeometry(QtCore.QRect(400, 442, 450, 120))
         self.error_msg.setFont(font2)
         self.error_msg.setAlignment(QtCore.Qt.AlignCenter)
 
