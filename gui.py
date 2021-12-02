@@ -15,6 +15,16 @@ def is_number(string):
         return False
 
 
+# Function to validate the input function string
+def validateSyntax(expression):
+    try:
+        functions.calc(expression, 2.14)
+    except (SyntaxError, NameError, ZeroDivisionError):
+        return False
+    else:
+        return True
+
+
 class Ui_myWindow(object):
     # Setting up the Components of the Window and their Geometrical Dimensions
     def setupUi(self, myWindow):
@@ -300,6 +310,11 @@ class Ui_myWindow(object):
 
         function_temp = function
         function = function.replace('^', '**')
+
+        # check if the function is valid or not
+        if self.function_rbutton.isChecked() and not validateSyntax(function):
+            self.func_error_msg.setText("Please Enter a Valid Function!")
+            return
 
         # depending on the index chosen from the Combo Box the method is selected
         # Number of columns used in the output table is defined depending on the method
