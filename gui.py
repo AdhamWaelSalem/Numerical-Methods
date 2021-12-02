@@ -325,6 +325,7 @@ class Ui_myWindow(object):
         # Get inputs required for the calculation of the root for the method
         # Call the method to get the root
         # Calculate Execution time of the selected method
+
         if index == 0:
             method = "Bisection"
             columns = 7

@@ -31,7 +31,7 @@ def diff_f_at_point(f):
 
 
 def calc(f, value):
-    x = value
+    x = float(value)
     return eval(f)
 
 

@@ -21,14 +21,14 @@ def clicked(function, root):
 class Ui_outputWindow(object):
     # Setting up the Components of the Window and their Geometrical Dimensions
     def setupUi(self, outputWindow, data, rows, columns, time, function, root, precision, method, message):
-        outputWindow.resize(800, 600)
+        outputWindow.resize(1200, 600)
 
         self.centralwidget = QtWidgets.QWidget(outputWindow)
         self.centralwidget.setObjectName("centralwidget")
 
         # Setting the Table Widget
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(0, 100, 801, 331))
+        self.tableWidget.setGeometry(QtCore.QRect(0, 100, 1200, 331))
         self.tableWidget.setObjectName("tableWidget")
 
         # Setting Fonts Family and font size
@@ -63,18 +63,18 @@ class Ui_outputWindow(object):
 
         font.setPointSize(20)
         self.method_label = QtWidgets.QLabel(self.centralwidget)
-        self.method_label.setGeometry(QtCore.QRect(220, 10, 331, 61))
+        self.method_label.setGeometry(QtCore.QRect(450, 10, 331, 61))
         self.method_label.setFont(font)
         self.method_label.setAlignment(QtCore.Qt.AlignCenter)
         self.method_label.setText(method)
 
         #Setting Push Button
         self.graph = QtWidgets.QPushButton(self.centralwidget)
-        self.graph.setGeometry(QtCore.QRect(374, 560, 91, 31))
+        self.graph.setGeometry(QtCore.QRect(560, 560, 91, 31))
 
         # Error Message Information
         self.error_msg = QtWidgets.QLabel(self.centralwidget)
-        self.error_msg.setGeometry(QtCore.QRect(486, 442, 291, 141))
+        self.error_msg.setGeometry(QtCore.QRect(400, 442, 450, 141))
         self.error_msg.setFont(font2)
         self.error_msg.setAlignment(QtCore.Qt.AlignCenter)
 
