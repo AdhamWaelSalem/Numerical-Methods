@@ -40,49 +40,25 @@ class Ui_outputWindow(object):
         font2.setBold(True)
 
         # Setting Labels
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(20, 480, 34, 16))
-        self.label.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.label.setFont(font)
-
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(20, 510, 61, 16))
-        self.label_2.setFont(font)
-
-        self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(20, 540, 101, 16))
-        self.label_3.setFont(font)
-
-        self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(20, 570, 131, 16))
-        self.label_4.setFont(font)
-
-        self.label_10 = QtWidgets.QLabel(self.centralwidget)
-        self.label_10.setGeometry(QtCore.QRect(20, 450, 61, 16))
-        self.label_10.setFont(font)
-
         self.func_label = QtWidgets.QLabel(self.centralwidget)
-        self.func_label.setGeometry(QtCore.QRect(90, 450, 261, 16))
+        self.func_label.setGeometry(QtCore.QRect(10, 450, 341, 20))
         self.func_label.setFont(font)
-        self.func_label.setText(function)
+        self.func_label.setText("Function= "+function)
 
         self.root_label = QtWidgets.QLabel(self.centralwidget)
-        self.root_label.setGeometry(QtCore.QRect(60, 480, 241, 16))
+        self.root_label.setGeometry(QtCore.QRect(10, 480, 341, 20))
         self.root_label.setFont(font)
 
-
         self.precision_label = QtWidgets.QLabel(self.centralwidget)
-        self.precision_label.setGeometry(QtCore.QRect(90, 510, 151, 16))
+        self.precision_label.setGeometry(QtCore.QRect(10, 510, 341, 20))
         self.precision_label.setFont(font)
 
-
         self.time_lable = QtWidgets.QLabel(self.centralwidget)
-        self.time_lable.setGeometry(QtCore.QRect(120, 540, 181, 16))
+        self.time_lable.setGeometry(QtCore.QRect(10, 540, 341, 20))
         self.time_lable.setFont(font)
 
-
         self.iterations_label = QtWidgets.QLabel(self.centralwidget)
-        self.iterations_label.setGeometry(QtCore.QRect(150, 570, 141, 16))
+        self.iterations_label.setGeometry(QtCore.QRect(10, 570, 341, 20))
         self.iterations_label.setFont(font)
 
         font.setPointSize(20)
@@ -112,12 +88,13 @@ class Ui_outputWindow(object):
             self.tableWidget.setRowCount(rows)
             self.tableWidget.setColumnCount(columns)
             self.setDataItems(data)
-            self.iterations_label.setText(str(rows))
-            self.time_lable.setText(str(time))
-            self.precision_label.setText(str(precision[-1]))
-            self.root_label.setText(str(root[-1]))
+            self.iterations_label.setText("Number of Iterations = "+str(rows))
+            self.time_lable.setText("Execution Time = "+str(time))
+            self.precision_label.setText("Precision = "+str(precision[-1]))
+            self.root_label.setText("Root = "+str(root[-1]))
         else:
             self.error_msg.setText(message)
+            self.graph.setEnabled(False)
 
         self.graph.clicked.connect(partial(clicked, function, root))
         outputWindow.setCentralWidget(self.centralwidget)
@@ -128,11 +105,6 @@ class Ui_outputWindow(object):
     def retranslateUi(self, outputWindow, message):
         _translate = QtCore.QCoreApplication.translate
         outputWindow.setWindowTitle(_translate("outputWindow", "Output"))
-        self.label.setText(_translate("outputWindow", "Root = "))
-        self.label_2.setText(_translate("outputWindow", "Precision = "))
-        self.label_3.setText(_translate("outputWindow", "Execution Time = "))
-        self.label_4.setText(_translate("outputWindow", "Number of Iterations = "))
-        self.label_10.setText(_translate("outputWindow", "Function = "))
         self.graph.setText(_translate("MainWindow", "Graph"))
 
     # Function to Set the data into the output table

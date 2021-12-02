@@ -41,58 +41,62 @@ class Ui_myWindow(object):
 
         # Setting the Input (line edits)
         self.func_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.func_input.setGeometry(QtCore.QRect(10, 40, 231, 20))
+        self.func_input.setGeometry(QtCore.QRect(10, 60, 281, 20))
 
         self.tolerance_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.tolerance_input.setGeometry(QtCore.QRect(430, 410, 113, 20))
+        self.tolerance_input.setGeometry(QtCore.QRect(440, 410, 113, 20))
 
         self.iterations_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.iterations_input.setGeometry(QtCore.QRect(50, 410, 113, 20))
+        self.iterations_input.setGeometry(QtCore.QRect(70, 410, 113, 20))
 
         self.fileName_input = QtWidgets.QLineEdit(self.centralwidget)
-        self.fileName_input.setGeometry(QtCore.QRect(380, 40, 201, 20))
+        self.fileName_input.setGeometry(QtCore.QRect(340, 59, 271, 21))
 
         self.range_input1 = QtWidgets.QLineEdit(self.centralwidget)
-        self.range_input1.setGeometry(QtCore.QRect(270, 220, 113, 20))
+        self.range_input1.setGeometry(QtCore.QRect(230, 220, 113, 20))
 
         self.range_input2 = QtWidgets.QLineEdit(self.centralwidget)
         self.range_input2.setGeometry(QtCore.QRect(470, 220, 113, 20))
 
         # Setting Labels
         self.label3 = QtWidgets.QLabel(self.centralwidget)
-        self.label3.setGeometry(QtCore.QRect(430, 380, 61, 16))
+        self.label3.setGeometry(QtCore.QRect(400, 379, 191, 21))
+        self.label3.setAlignment(QtCore.Qt.AlignCenter)
         self.label3.setFont(font)
 
         self.label2 = QtWidgets.QLabel(self.centralwidget)
-        self.label2.setGeometry(QtCore.QRect(10, 380, 211, 16))
+        self.label2.setGeometry(QtCore.QRect(0, 380, 271, 21))
+        self.label2.setAlignment(QtCore.Qt.AlignCenter)
         self.label2.setFont(font)
 
         self.method_name_label = QtWidgets.QLabel(self.centralwidget)
-        self.method_name_label.setGeometry(QtCore.QRect(340, 160, 180, 20))
+        self.method_name_label.setGeometry(QtCore.QRect(300, 160, 211, 21))
         self.method_name_label.setFont(font)
         self.method_name_label.setAlignment(QtCore.Qt.AlignCenter)  # to set the alignment of the label to be centered
 
         self.range_label1 = QtWidgets.QLabel(self.centralwidget)
-        self.range_label1.setGeometry(QtCore.QRect(260, 200, 131, 20))
+        self.range_label1.setGeometry(QtCore.QRect(220, 200, 131, 20))
         self.range_label1.setFont(font)
         self.range_label1.setAlignment(QtCore.Qt.AlignCenter)  # to set the alignment of the label to be centered
 
         self.range_label2 = QtWidgets.QLabel(self.centralwidget)
-        self.range_label2.setGeometry(QtCore.QRect(510, 200, 35, 20))
+        self.range_label2.setGeometry(QtCore.QRect(470, 200, 111, 20))
         self.range_label2.setFont(font)
         self.range_label2.setAlignment(QtCore.Qt.AlignCenter)  # to set the alignment of the label to be centered
 
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        self.label_5.setGeometry(QtCore.QRect(80, 430, 61, 20))
+        self.label_5.setGeometry(QtCore.QRect(60, 430, 131, 21))
+        self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setFont(font2)
 
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        self.label_6.setGeometry(QtCore.QRect(450, 430, 81, 16))
+        self.label_6.setGeometry(QtCore.QRect(410, 430, 181, 20))
+        self.label_6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_6.setFont(font2)
 
         # Setting Combo Box
         self.method_options = QtWidgets.QComboBox(self.centralwidget)
-        self.method_options.setGeometry(QtCore.QRect(50, 200, 111, 22))
+        self.method_options.setGeometry(QtCore.QRect(30, 220, 111, 22))
         self.method_options.addItem("")
         self.method_options.addItem("")
         self.method_options.addItem("")
@@ -106,12 +110,12 @@ class Ui_myWindow(object):
 
         # Setting Radio Buttons
         self.function_rbutton = QtWidgets.QRadioButton(self.centralwidget)
-        self.function_rbutton.setGeometry(QtCore.QRect(80, 10, 91, 17))
+        self.function_rbutton.setGeometry(QtCore.QRect(60, 20, 171, 21))
         self.function_rbutton.setFont(font)
         self.function_rbutton.setChecked(True)  # Setting this radio button as being checked by default
 
         self.file_rbutton = QtWidgets.QRadioButton(self.centralwidget)
-        self.file_rbutton.setGeometry(QtCore.QRect(440, 10, 91, 17))
+        self.file_rbutton.setGeometry(QtCore.QRect(390, 20, 201, 20))
         self.file_rbutton.setFont(font)
         self.fileName_input.setEnabled(False)  # Since the other radio button is checked then disable this input
 
@@ -120,25 +124,25 @@ class Ui_myWindow(object):
 
         # Setting Error Messages
         self.func_error_msg = QtWidgets.QLabel(self.centralwidget)
-        self.func_error_msg.setGeometry(QtCore.QRect(10, 70, 231, 21))
+        self.func_error_msg.setGeometry(QtCore.QRect(10, 90, 281, 31))
         self.func_error_msg.setAlignment(QtCore.Qt.AlignCenter)  # to set the alignment of the label to be centered
         self.func_error_msg.setFont(font2)
         self.func_error_msg.setText('')
 
         self.file_error_msg = QtWidgets.QLabel(self.centralwidget)
-        self.file_error_msg.setGeometry(QtCore.QRect(386, 70, 191, 20))
+        self.file_error_msg.setGeometry(QtCore.QRect(340, 90, 271, 31))
         self.file_error_msg.setAlignment(QtCore.Qt.AlignCenter)  # to set the alignment of the label to be centered
         self.file_error_msg.setFont(font2)
         self.file_error_msg.setText('')
 
         self.range1_error_msg = QtWidgets.QLabel(self.centralwidget)
-        self.range1_error_msg.setGeometry(QtCore.QRect(240, 250, 171, 20))
+        self.range1_error_msg.setGeometry(QtCore.QRect(170, 250, 231, 31))
         self.range1_error_msg.setAlignment(QtCore.Qt.AlignCenter)  # to set the alignment of the label to be centered
         self.range1_error_msg.setFont(font2)
         self.range1_error_msg.setText('')
 
         self.range2_error_msg = QtWidgets.QLabel(self.centralwidget)
-        self.range2_error_msg.setGeometry(QtCore.QRect(446, 250, 161, 20))
+        self.range2_error_msg.setGeometry(QtCore.QRect(416, 250, 211, 31))
         self.range2_error_msg.setAlignment(QtCore.Qt.AlignCenter)  # to set the alignment of the label to be centered
         self.range2_error_msg.setFont(font2)
         self.range2_error_msg.setText('')
